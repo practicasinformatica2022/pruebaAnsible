@@ -1,0 +1,7 @@
+---
+- name: Prueba de conexión      # Nombre descriptivo del playbook
+  hosts: all                    # Ejecutar en todos los hosts del inventario
+
+  tasks:                        # Lista de tareas a ejecutar
+    - name: Hacer ping al servidor   # Nombre de la tarea
+      ansible.builtin.ping:          # Módulo ping de Ansible
