@@ -1,0 +1,16 @@
+---
+- name: Instalar y arrancar Nginx
+  hosts: webservers
+  become: yes  # Esto le dice a Ansible que use 'sudo' (root)
+  tasks:
+    - name: Asegurar que Nginx está instalado (Ubuntu/Debian)
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Asegurar que Nginx está iniciado
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
