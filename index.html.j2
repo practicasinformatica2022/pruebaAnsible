@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página de {{ entorno }}</title>
+    <style>
+        body { font-family: Arial; background-color: {{ color_fondo }}; color: white; text-align: center; margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <h1>¡Hola! Bienvenido al entorno de {{ entorno }}</h1>
+    <p>Esta página ha sido desplegada automáticamente con Ansible.</p>
+    <hr>
+    <h3>Datos del Servidor (Ansible Facts):</h3>
+    <p><strong>Sistema Operativo:</strong> {{ ansible_distribution }} {{ ansible_distribution_version }}</p>
+    <p><strong>Nombre del Host:</strong> {{ ansible_hostname }}</p>
+    <p><strong>Dirección IP:</strong> {{ ansible_default_ipv4.address | default('Desconocida') }}</p>
+</body>
+</html>
