@@ -1,0 +1,27 @@
+---
+- name: Desplegar sitio web dinámico              # Nombre del playbook
+  hosts: webservers                               # Ejecutar playboy en webservers (ver inventario.ini)
+  become: yes                                     # Ejecutar tareas como sudo
+
+  vars:                                           # Variables por defecto del playbook
+    entorno: "Desarrollo"                         # 1º variable: entorno
+    color_fondo: "#333333"                        # 2º variable: color_fondo
+
+  tasks:                                          # Lista de tareas a ejecutar
+
+    - name: Copiar plantilla de la web al servidor Nginx   # Tarea principal
+      ansible.builtin.template:                   # Módulo que procesa plantillas Jinja2
+        src: index.html.j2                        # Leer archivo en github
+        dest: /var/www/html/index.html            # Copiar archivo al servidor
+        owner: www-data                           # Dar permisos al archivo
+        group: www-data                   
+        mode: '0644'                              
+      notify: Reiniciar Nginx                     # Llamar al handler solo SI el archivo cambia
+
+    # Los handlers son tareas que solo se ejecutan si son llamadas (notified) por otra tarea
+  handlers:
+
+    - name: Reiniciar Nginx                       # Nombre del handler
+      ansible.builtin.service:                    # Módulo para gestionar servicios
+        name: nginx                               # Servicio que se va a administrar
+        state: restarted                          # Reiniciar el servicio Nginx
